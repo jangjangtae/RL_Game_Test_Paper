@@ -229,6 +229,7 @@ if __name__ == "__main__":
     print('***********************************************************\n')
 
     device = "cuda"
+    print("✅ Using device:", device)
     env = wrappers.make_env(DEFAULT_ENV_NAME)
     num_actions = 5
     net = dqn_model.DQN(env.observation_space.shape, num_actions).to(device)
@@ -242,7 +243,7 @@ if __name__ == "__main__":
         eval_env = wrappers.make_env(DEFAULT_ENV_NAME)
         eval_agent = EvalAgent(eval_env)  # 학습 없이 평가만
         eval_rewards = []
-        for _ in range(5):  # 빠르게 평균 보상 측정
+        for _ in range(10):  # 빠르게 평균 보상 측정
             r = 0
             eval_agent._reset()
             done = False
@@ -290,12 +291,12 @@ if __name__ == "__main__":
             mean_reward = float(np.mean(total_rewards[-100:]))
 
             recent_means.append(mean_reward)
-            if len(recent_means) > 20:
+            if len(recent_means) > 10:
                 recent_means.pop(0)
                 delta = max(recent_means) - min(recent_means)
-                if delta < mean_reward * 0.01:
-                    epsilon = min(1.0, epsilon + 0.01)
-                    print("⚠️ 보상이 정체 상태입니다. epsilon 값을 일시적으로 증가시킵니다.")
+                if delta < mean_reward * 0.03 and epsilon < 0.3:
+                    epsilon = min(0.3, epsilon + 0.01)
+                    print("보상이 정체 상태입니다. epsilon 값을 일시적으로 증가")
 
             print("frames: %d, episodes: %d , mean reward: %.3f, eps: %.2f, speed: %.2f f/s" % (
                 frame_idx, len(total_rewards), mean_reward, epsilon, speed))
