@@ -57,12 +57,13 @@ class EvalAgent:
         return self.check_bug('bug_left/', 0, 42, 15, 72)
 
     @torch.no_grad()
-    def play_episode(self, net, epsilon=0.0, device="cuda"):
+    def play_episode(self, net, epsilon, device="cuda"):
         self._reset()
         done = False
         bug_log = []
 
         while not done:
+            #env.render()
             self.env.env.ale.saveScreenPNG('current_screen.png')
 
             if not self.bug_flags[0] and self.check_bug1():
@@ -118,11 +119,11 @@ if __name__ == "__main__":
 
         # 보상 정체 판단
         recent_means.append(r)
-        if len(recent_means) > 20:
+        if len(recent_means) > 10:
             recent_means.pop(0)
             delta = max(recent_means) - min(recent_means)
             if delta < np.mean(recent_means) * 0.03:
-                epsilon = min(1.0, epsilon + 0.01)
+                epsilon = min(0.3, epsilon + 0.01)
                 print("⚠️ 평가 중 보상 정체 탐지, epsilon 값을 증가시킵니다.")
                 print(f"[Random Action] Epsilon: {epsilon:.3f}")
 
