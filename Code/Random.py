@@ -36,28 +36,28 @@ if __name__ == "__main__":
         while True:
             action = np.random.choice(n_actions)
             next_obs, reward, is_done, _ = env.step(action)
-            if -0.55 < next_obs[0] < -0.5 and not flag_injected_bug_spotted[0]:
+            if -0.5 < next_obs[0] < -0.45 and not flag_injected_bug_spotted[0]:
                 #reward += bug_reward[bug_index]
                 #bug_index += 1
                 reward += 50
                 file.write('BUG1 ')
                 flag_injected_bug_spotted[0] = True
 
-            if 0.5 < next_obs[0] < 0.55 and not flag_injected_bug_spotted[1]:
+            if 0.45 < next_obs[0] < 0.5 and not flag_injected_bug_spotted[1]:
                 #reward += bug_reward[bug_index]
                 #bug_index += 1
                 reward += 50
                 file.write('BUG2 ')
                 flag_injected_bug_spotted[1] = True
         
-            if -1.0 < next_obs[0] < -0.95 and not flag_injected_bug_spotted[2]:
+            if -0.7 < next_obs[0] < -0.65 and not flag_injected_bug_spotted[2]:
                 #reward += bug_reward[bug_index]
                 #bug_index += 1
                 reward += 50
                 file.write('BUG3 ')
                 flag_injected_bug_spotted[2] = True
 
-            if 0.95 < next_obs[0] < 1.0 and not flag_injected_bug_spotted[3]:
+            if 0.65 < next_obs[0] < 0.7 and not flag_injected_bug_spotted[3]:
                 #reward += bug_reward[bug_index]
                 #bug_index += 1
                 reward += 50
