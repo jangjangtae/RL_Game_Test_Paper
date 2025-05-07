@@ -39,7 +39,7 @@ REPLAY_START_SIZE = 10000
 
 EPSILON_DECAY_LAST_FRAME = 1500000
 EPSILON_START = 1.0
-EPSILON_FINAL = 0.01
+EPSILON_FINAL = 0.1
 
 # experience unit : state, action -> new_state, reward, done or not
 Experience = collections.namedtuple(
